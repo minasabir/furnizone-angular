@@ -3,7 +3,7 @@
   "name": "furnizone-angular",
   "framework": "angular",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist/furnizone-angular/browser",
+  "outputDirectory": "dist/furnizone-angular",
   "rewrites": [
     {
       "source": "/(.*)",
