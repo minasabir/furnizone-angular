@@ -1,0 +1,106 @@
+<div class="min-h-screen bg-background flex items-center justify-center py-12 px-4">
+  <div class="max-w-md w-full">
+    <div class="bg-white rounded-2xl shadow-lg p-8">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-center space-x-2 mb-4">
+          <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+            <span class="text-white text-xl font-bold">FZ</span>
+          </div>
+          <span class="text-2xl font-bold text-primary">FurniZone</span>
+        </div>
+        <h2 class="text-2xl font-bold text-foreground">Create Account</h2>
+        <p class="text-muted-foreground mt-2">Join us today</p>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+        {{ error }}
+      </div>
+
+      <!-- Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-1">Full Name</label>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="input"
+            [class.border-red-500]="f['fullName'].invalid && f['fullName'].touched"
+            placeholder="John Doe"
+          />
+          <div *ngIf="f['fullName'].invalid && f['fullName'].touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="f['fullName'].errors?.['required']">Full name is required</span>
+            <span *ngIf="f['fullName'].errors?.['minlength']">Name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-1">Email</label>
+          <input
+            type="email"
+            formControlName="email"
+            class="input"
+            [class.border-red-500]="f['email'].invalid && f['email'].touched"
+            placeholder="your@email.com"
+          />
+          <div *ngIf="f['email'].invalid && f['email'].touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="f['email'].errors?.['required']">Email is required</span>
+            <span *ngIf="f['email'].errors?.['email']">Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-1">Password</label>
+          <input
+            type="password"
+            formControlName="password"
+            class="input"
+            [class.border-red-500]="f['password'].invalid && f['password'].touched"
+            placeholder="••••••••"
+          />
+          <div *ngIf="f['password'].invalid && f['password'].touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="f['password'].errors?.['required']">Password is required</span>
+            <span *ngIf="f['password'].errors?.['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-foreground mb-1">Confirm Password</label>
+          <input
+            type="password"
+            formControlName="confirmPassword"
+            class="input"
+            [class.border-red-500]="(f['confirmPassword'].invalid || registerForm.errors?.['passwordMismatch']) && f['confirmPassword'].touched"
+            placeholder="••••••••"
+          />
+          <div *ngIf="(f['confirmPassword'].invalid || registerForm.errors?.['passwordMismatch']) && f['confirmPassword'].touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="f['confirmPassword'].errors?.['required']">Please confirm your password</span>
+            <span *ngIf="registerForm.errors?.['passwordMismatch']">Passwords do not match</span>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loading || registerForm.invalid"
+          class="btn-primary w-full"
+        >
+          <span *ngIf="!loading">Create Account</span>
+          <span *ngIf="loading" class="flex items-center justify-center">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Creating account...
+          </span>
+        </button>
+      </form>
+
+      <!-- Sign in link -->
+      <p class="text-center mt-6 text-muted-foreground">
+        Already have an account?
+        <a routerLink="/login" class="text-primary hover:underline font-medium">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
